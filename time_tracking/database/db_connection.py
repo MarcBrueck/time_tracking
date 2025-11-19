@@ -2,7 +2,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from time_tracking.database.tables import Base
 
-CONNECTION_STRING = "sqlite:///time_tracking.db"
+
 # For Postgres:
 # DATABASE_URL = "postgresql://user:password@localhost:5432/mydb"
 

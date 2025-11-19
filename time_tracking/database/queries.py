@@ -52,3 +52,78 @@ def update_employee(
         session.commit()
         session.refresh(employee)
         return employee
+
+
+def get_employee(db: DatabaseConnection, employee_id: int) -> Employee | None:
+    """Return a single employee by ID."""
+    with db.get_session() as session:
+        employee = session.get(Employee, employee_id)
+        return employee
+
+
+def get_all_employees(db: DatabaseConnection) -> list[Employee]:
+    """Return a list of all employees."""
+    with db.get_session() as session:
+        employees = session.query(Employee).all()
+        return employees
+
+
+from time_tracking.database.tables import WorkLog
+
+
+def add_workshift(db, employee_id: int, start_time, end_time):
+    with db.get_session() as session:
+        log = WorkLog(
+            employee_id=employee_id,
+            start_time=start_time,
+            end_time=end_time
+        )
+        session.add(log)
+        session.commit()
+        session.refresh(log)
+        return log
+
+
+def update_workshift(db, workshift_id: int, start_time=None, end_time=None):
+    with db.get_session() as session:
+        log = session.get(WorkLog, workshift_id)
+        if not log:
+            return None
+
+        if start_time is not None:
+            log.start_time = start_time
+        if end_time is not None:
+            log.end_time = end_time
+
+        session.commit()
+        session.refresh(log)
+        return log
+
+
+def delete_workshift(db, workshift_id: int):
+    with db.get_session() as session:
+        log = session.get(WorkLog, workshift_id)
+        if not log:
+            return False
+        session.delete(log)
+        session.commit()
+        return True
+
+
+def get_workshift(db, workshift_id: int):
+    with db.get_session() as session:
+        return session.get(WorkLog, workshift_id)
+
+
+def get_all_workshifts(db):
+    with db.get_session() as session:
+        return session.query(WorkLog).all()
+
+
+def get_workshifts_by_employee(db, employee_id: int):
+    with db.get_session() as session:
+        return (
+            session.query(WorkLog)
+            .filter(WorkLog.employee_id == employee_id)
+            .all()
+        )

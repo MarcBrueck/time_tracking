@@ -5,7 +5,9 @@ time_tracking/database/db_connection.py
 time_tracking/database/queries.py
 time_tracking/database/tables.py
 time_tracking/models/simple_models.py
-time_tracking/routers/tracking_routes.py
+time_tracking/models/working_shift_models.py
+time_tracking/routers/employee_routes.py
+time_tracking/routers/working_shift_routes.py
 time_tracking/time_tracking.egg-info/PKG-INFO
 time_tracking/time_tracking.egg-info/SOURCES.txt
 time_tracking/time_tracking.egg-info/dependency_links.txt

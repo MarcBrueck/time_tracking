@@ -2,13 +2,14 @@ Metadata-Version: 2.4
 Name: time_tracking
 Version: 0.1.0
 Summary: Api for Time tracking employees
-Author-email: Your Name <you@example.com>
+Author-email: Marco Brückner <you@example.com>
 License: MIT
 Requires-Python: >=3.13
 Description-Content-Type: text/markdown
 Requires-Dist: fastapi>=0.121.2
 Requires-Dist: pandas>=1.5
 Requires-Dist: pydantic[email]>=2.12.4
+Requires-Dist: python-dotenv>=1.2.1
 Requires-Dist: sqlalchemy>=2.0.44
 Requires-Dist: uvicorn>=0.38.0
 
@@ -22,17 +23,14 @@ First clone the repo
 git clone https://some-url
 ```
 
-Then create a virtual environment using python version >= 3.13
+Then create a virtual environment using 
 ```bash
-python313 -m venv venv
+uv sync
 ```
 
 Then activate it:
 ```bash
-source venv/bin/activate
+source .venv/bin/activate
 ```
 
-Next install the dependencies using the uv package manager:
-```bash
-uv install
-```
+

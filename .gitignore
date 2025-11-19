@@ -1,0 +1,37 @@
+# Compiled files
+*.class
+*.o
+*.lo
+*.la
+
+# Python files
+*.py[cod]
+__pycache__/
+*.so
+
+# Packages
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.tgz
+
+# Logs and databases
+*.log
+*.sql
+*.sqlite
+*.db
+
+
+
+
+# VS Code
+.vscode/
+
+# Environment
+.env
+venv/
+.venv/
+.env/
+

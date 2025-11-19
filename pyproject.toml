@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "time_tracking"
+version = "0.1.0"
+description = "Api for Time tracking employees"
+readme = "README.md"
+requires-python = ">=3.13"
+license = { text = "MIT" }
+authors = [
+  { name="Your Name", email="you@example.com" }
+]
+
+dependencies = [
+    "fastapi>=0.121.2",
+    "pandas>=1.5",
+    "pydantic[email]>=2.12.4",
+    "sqlalchemy>=2.0.44",
+    "uvicorn>=0.38.0",
+]
+
+
+[tool.setuptools]
+package-dir = {"" = "time_tracking"}
+
+[tool.setuptools.packages.find]
+where = ["time_tracking"]

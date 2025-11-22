@@ -2,21 +2,25 @@
 
 This repository contains a little demonstration.
 It contains an api-server that handles employee working time data.
-
+To run this you need python>=3.13
 
 
 ## Installation
 First clone the repo
 ```bash
-git clone https://some-url
+git clone https://github.com/MarcBrueck/time_tracking.git
 ```
 
-Then create a virtual environment and install the dependencies using 
+If you dont have uv installed, you can install it using pip:
+```bash
+pip install uv
+```
+Then create a virtual environment and install the dependencies using uv.
 ```bash
 uv sync
 ```
 
-Then activate it:
+Then activate the virtual environment:
 ```bash
 source .venv/bin/activate
 ```

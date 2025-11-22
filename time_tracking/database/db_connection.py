@@ -3,11 +3,6 @@ from sqlalchemy.orm import sessionmaker
 from time_tracking.database.tables import Base
 
 
-# For Postgres:
-# DATABASE_URL = "postgresql://user:password@localhost:5432/mydb"
-
-
-
 
 class DatabaseConnection:
     def __init__(self, connection_string):
@@ -21,7 +16,7 @@ class DatabaseConnection:
     def get_session(self):
         return self.SessionLocal()
         
-    def drop_tables(self):
-        Base.metadata.drop_all(bind=self.engine)
+    # def drop_tables(self):
+    #     Base.metadata.drop_all(bind=self.engine)
 
 

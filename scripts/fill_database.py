@@ -4,13 +4,10 @@ from datetime import datetime, timedelta
 from faker import Faker
 
 fake = Faker()
+BASE_URL = "http://localhost:8000"  
 
-BASE_URL = "http://localhost:8000"   # adjust if needed
 
 
-# -------------------------------------------------------------------------------------
-# Helpers
-# -------------------------------------------------------------------------------------
 
 def create_employee():
     """Create a fake employee via the API."""
@@ -26,18 +23,18 @@ def create_employee():
             "email": email
         }
     )
+
     if response.status_code != 200:
-        print("Failed to create employee:", response.text)
+        print(f"Failed to create employee: {response.text}")
         return None
 
-    # response is: "Employee created with ID X"
-    employee_id = int(response.text.split()[-1])
+    data = response.json() 
+    employee_id = data.get("id")
     return employee_id
 
 
 def create_random_workshift(employee_id: int):
-    """Create a random *non-overlapping* work shift for an employee."""
-    # random day in the last 30 days
+    """Create a random work shift for an employee."""
     day = fake.date_between(start_date='-30d', end_date='today')
 
     start_hour = random.randint(6, 14)
@@ -56,41 +53,31 @@ def create_random_workshift(employee_id: int):
     )
 
     if response.status_code != 200:
-        print("Failed to create shift:", response.text)
+        pass
     else:
-        print(f"  → shift: {start} → {end}")
+        data = response.json()
+        shift_id = data.get("id")
+        print(f"  → Shift {shift_id}: {start} → {end}")
 
 
-# -------------------------------------------------------------------------------------
-# Main Seeder
-# -------------------------------------------------------------------------------------
 
-def seed_demo_data(
-    employee_count: int = 50,
-    min_shifts: int = 5,
-    max_shifts: int = 10
-):
-    print("🚀 Starting seed script...")
+def seed_demo_data(employee_count: int = 50, min_shifts: int = 5, max_shifts: int = 10):
 
     created_employees = []
 
-    # ---- CREATE EMPLOYEES ----
     print(f"\nCreating {employee_count} employees...")
     for _ in range(employee_count):
         emp_id = create_employee()
         if emp_id:
             created_employees.append(emp_id)
-            print(f"Created employee {emp_id}")
 
-    # ---- CREATE WORK SHIFTS FOR EACH EMPLOYEE ----
-    print(f"\nCreating work shifts...")
+    print(f"\nCreating work shifts for employees...")
     for emp_id in created_employees:
         shift_count = random.randint(min_shifts, max_shifts)
         print(f"\nEmployee {emp_id} → generating {shift_count} shifts...")
         for _ in range(shift_count):
             create_random_workshift(emp_id)
 
-    print("\n🎉 Seeding complete!")
 
 
 if __name__ == "__main__":

@@ -52,7 +52,7 @@ def update_workshift(
 
 
 
-@router.delete("/delete/{workshift_id}", response_model=str)
+@router.delete("/delete/{workshift_id}", response_model=dict)
 def delete_workshift(
     workshift_id: int,
     db: DatabaseConnection = Depends(get_db)
@@ -62,7 +62,10 @@ def delete_workshift(
     if not deleted:
         raise HTTPException(status_code=404, detail="Work log not found")
 
-    return f"Work log {workshift_id} deleted successfully"
+    return {
+        "id": workshift_id,
+        "message": "Work log deleted successfully"
+    }
 
 
 

@@ -14,7 +14,7 @@ def get_db():
     return db
 
 
-@router.post("/add", response_model=str)
+@router.post("/add", response_model=dict)
 def create_employee(
     employee: EmployeeCreate,
     db: DatabaseConnection = Depends(get_db)
@@ -25,10 +25,14 @@ def create_employee(
         last_name=employee.last_name,
         email=employee.email
     )
-    return f"Employee created with ID {created.id}"
+    return {
+        "id": created.id,
+        "message": "Employee created successfully"
+    }
 
 
-@router.put("/update/{employee_id}", response_model=str)
+
+@router.put("/update/{employee_id}", response_model=dict)
 def update_employee(
     employee_id: int,
     update_data: EmployeeUpdate,
@@ -45,10 +49,14 @@ def update_employee(
     if updated is None:
         raise HTTPException(status_code=404, detail="Employee not found")
 
-    return f"Employee {employee_id} updated successfully"
+    return {
+        "id": employee_id,
+        "message": "Employee updated successfully"
+    }
 
 
-@router.delete("/delete/{employee_id}", response_model=str)
+
+@router.delete("/delete/{employee_id}", response_model=dict)
 def delete_employee(
     employee_id: int,
     db: DatabaseConnection = Depends(get_db)
@@ -58,7 +66,10 @@ def delete_employee(
     if not deleted:
         raise HTTPException(status_code=404, detail="Employee not found")
 
-    return f"Employee {employee_id} deleted successfully"
+    return {
+        "id": employee_id,
+        "message": "Employee deleted successfully"
+    }
 
 
 @router.get("/{employee_id}", response_model=EmployeeRead)

@@ -22,13 +22,16 @@ def add_workshift(
     workshift: WorkLogCreate,
     db: DatabaseConnection = Depends(get_db)
 ):
-    created = queries.add_workshift(
-        db=db,
-        employee_id=workshift.employee_id,
-        start_time=workshift.start_time,
-        end_time=workshift.end_time
-    )
-    return created
+    try:
+        created = queries.add_workshift(
+            db=db,
+            employee_id=workshift.employee_id,
+            start_time=workshift.start_time,
+            end_time=workshift.end_time
+        )
+        return created
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
 
 
 

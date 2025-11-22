@@ -46,7 +46,32 @@ Then you can see the swagger UI listing the api documentation here:
 http://127.0.0.1:8000/docs
 ```
 
+There you can see all the endpoints and paths for example
+```bash
+curl -X 'GET' \
+  'http://127.0.0.1:8000/employees/' \
+  -H 'accept: application/json'
+```
+to fetch all employee data
+
 There is also a script that fills the database with some random data:
 ```bash
 python scripts/fill_database.py
+```
+
+## Run the application using Docker
+First build the image
+```bash
+docker build -t time_tracking:v1 .
+```
+
+and then run it
+```bash
+docker run -p 8000:8000 -e CONNECTION_STRING="sqlite:///time_tracking.db" time_tracking:v1
+```
+
+
+## Run the unittests
+```bash
+pytest
 ```

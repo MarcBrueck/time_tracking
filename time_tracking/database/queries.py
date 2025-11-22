@@ -1,6 +1,6 @@
 from time_tracking.database.db_connection import DatabaseConnection
 from time_tracking.database.tables import Employee
-from typing import Optional
+from typing import Optional, List
 
 
 def add_employee(db: DatabaseConnection, first_name: str, last_name: str, email: str) -> Employee:
@@ -73,6 +73,15 @@ from time_tracking.database.tables import WorkLog
 
 def add_workshift(db, employee_id: int, start_time, end_time):
     with db.get_session() as session:
+
+        overlap = session.query(WorkLog).filter(
+            WorkLog.employee_id == employee_id,
+            ((WorkLog.start_time < end_time) & (WorkLog.start_time > start_time)) | ((WorkLog.end_time < end_time) & (WorkLog.end_time > start_time))
+        ).first()
+
+        if overlap:
+            raise ValueError("Workshift overlaps an existing shift.")
+        
         log = WorkLog(
             employee_id=employee_id,
             start_time=start_time,
@@ -120,7 +129,7 @@ def get_all_workshifts(db):
         return session.query(WorkLog).all()
 
 
-def get_workshifts_by_employee(db, employee_id: int):
+def get_workshifts_by_employee(db, employee_id: int) -> List[WorkLog]:
     with db.get_session() as session:
         return (
             session.query(WorkLog)

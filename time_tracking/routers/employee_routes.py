@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 from time_tracking.database.db_connection import DatabaseConnection
 from time_tracking.config import CONNECTION_STRING
 from time_tracking.database import queries
-from time_tracking.models.simple_models import EmployeeCreate, EmployeeUpdate, EmployeeRead
+from models.employee_models import EmployeeCreate, EmployeeUpdate, EmployeeRead
 
 router = APIRouter(prefix="/employees", tags=["employees"])
 
@@ -18,7 +18,7 @@ def get_db():
 def create_employee(
     employee: EmployeeCreate,
     db: DatabaseConnection = Depends(get_db)
-):
+):  
     created = queries.add_employee(
         db=db,
         first_name=employee.first_name,

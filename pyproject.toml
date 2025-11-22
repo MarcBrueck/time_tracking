@@ -33,4 +33,5 @@ where = ["time_tracking"]
 dev = [
     "faker>=38.0.0",
     "requests>=2.32.5",
+    "pytest>=9.0.1",
 ]
